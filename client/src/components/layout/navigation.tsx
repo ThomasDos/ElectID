@@ -7,7 +7,12 @@ function Navigation() {
       <Link href='/'>
         <div>EID</div>
       </Link>
-      <ConnectKitButton />
+      <div className='flex items-center gap-2'>
+        <Link href='/admin'>
+          <div>Admin</div>
+        </Link>
+        <ConnectKitButton />
+      </div>
     </nav>
   )
 }

@@ -1,7 +1,8 @@
-import { storage } from '@/services/firebase'
+import { db, storage } from '@/services/firebase'
 import resizeImage from '@/utils/resize-image.utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ConnectKitButton } from 'connectkit'
+import { addDoc, collection } from 'firebase/firestore/lite'
 import { ref, uploadBytes } from 'firebase/storage'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -40,6 +41,19 @@ function NewIDForm() {
       uploadBytes(storageRef, resizedImage as Blob).then(() => {
         //TODO: reload page
       })
+
+      try {
+        const docRef = await addDoc(collection(db, 'pending_users'), {
+          firstname: data.firstName,
+          lastname: data.lastName,
+          public_key: data.address,
+          created_at: new Date().toISOString()
+        })
+
+        console.log('Document written with ID: ', docRef.id)
+      } catch (e) {
+        console.error('Error adding document: ', e)
+      }
     }
   }
 
