@@ -16,14 +16,11 @@ function SignInAdmin() {
   })
   const handleSignIn = async (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
+      .then(() => {
         useAppSettingsStore.setState({ isAdmin: true })
       })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
+      .catch(() => {
+        useAppSettingsStore.setState({ isAdmin: false })
       })
   }
   return (

@@ -2,13 +2,12 @@ import { auth } from '@/services/firebase'
 import { useAppSettingsStore } from '@/store/app-settings'
 import { ConnectKitButton } from 'connectkit'
 import { signOut } from 'firebase/auth'
-import { isEmpty } from 'lodash'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
 function Navigation() {
-  const { currentUser } = auth
-  console.log('currentUser:', currentUser)
+  const isAdmin = useAppSettingsStore((state) => state.isAdmin)
+
   return (
     <nav className='flex justify-between p-6 mb-10 border-b-2'>
       <Link href='/'>
@@ -19,11 +18,11 @@ function Navigation() {
           <div>Create a new ID</div>
         </Link>
         <ConnectKitButton />
-        {isEmpty(currentUser) ? (
-          <Link href='/admin'>
-            <div>Admin</div>
-          </Link>
-        ) : (
+
+        <Link href='/admin'>
+          <div>Admin</div>
+        </Link>
+        {isAdmin && (
           <div
             className='cursor-pointer'
             onClick={() =>
@@ -31,7 +30,7 @@ function Navigation() {
                 .then(() => useAppSettingsStore.setState({ isAdmin: false }))
                 .catch((err) => toast.error(err.message))
             }>
-            Log out{' '}
+            Log out
           </div>
         )}
       </div>

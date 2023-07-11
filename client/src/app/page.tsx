@@ -6,9 +6,5 @@ export const metadata: Metadata = {
   description: 'DAO for the future of identity'
 }
 export default function Home() {
-  return (
-    <main className='flex  flex-col items-center'>
-
-    </main>
-  )
+  return <main className='flex  flex-col items-center'></main>
 }
