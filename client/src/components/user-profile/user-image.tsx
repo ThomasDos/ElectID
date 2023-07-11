@@ -1,5 +1,5 @@
 import { storage } from '@/services/firebase'
-import convertBytesToImage from '@/utils/convertBytesToImage'
+import convertBytesToImage from '@/utils/convert-bytes-to-image'
 import { getBytes, ref } from 'firebase/storage'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'

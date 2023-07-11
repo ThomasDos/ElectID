@@ -1,10 +1,14 @@
 'use client'
 import Navigation from '@/components/layout/navigation'
 import { config } from '@/services/connect-kit-client'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 import { ConnectKitProvider } from 'connectkit'
 import type { Metadata } from 'next'
-import { SessionProvider } from 'next-auth/react'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import { WagmiConfig } from 'wagmi'
 import './globals.css'
 
@@ -17,17 +21,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
-      <WagmiConfig config={config}>
-        <ConnectKitProvider>
-          <html lang='en'>
-            <body className={inter.className}>
-              <Navigation />
-              {children}
-            </body>
-          </html>
-        </ConnectKitProvider>
-      </WagmiConfig>
-    </SessionProvider>
+    <WagmiConfig config={config}>
+      <ConnectKitProvider>
+        <html lang='en'>
+          <body className={`${inter.className} min-h-screen`}>
+            <Navigation />
+            {children}
+            <Toaster />
+          </body>
+        </html>
+      </ConnectKitProvider>
+    </WagmiConfig>
   )
 }
