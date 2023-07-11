@@ -6,18 +6,12 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { ConnectKitProvider } from 'connectkit'
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { WagmiConfig } from 'wagmi'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'ElectID',
-  description: 'DAO for the future of identity'
-}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
