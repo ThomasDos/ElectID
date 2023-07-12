@@ -1,27 +1,29 @@
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat'
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const [owner] = await ethers.getSigners()
 
-  const lockedAmount = ethers.parseEther("0.001");
+  const transactionCount = await owner.getNonce()
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  // gets the address of the token before it is deployed
+  const futureAddress = ethers.getContractAddress({
+    from: owner.address,
+    nonce: transactionCount + 1
+  })
 
-  await lock.waitForDeployment();
+  const EIDGovernor = await ethers.getContractFactory('EIDGovernor')
+  const governor = await EIDGovernor.deploy(futureAddress)
 
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+  const ElectID = await ethers.getContractFactory('ElectID')
+  const token = await ElectID.deploy(governor.address)
+
+  console.log(`Governor deployed to ${governor.address}`, `Token deployed to ${token.address}`)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+// EIDGovernor address : 0xc36FFf14198BC269D2316CcDDEAD60D5c763DBB8
+// ElectID address : 0xE353Cf5865932B3Fdb1C506fB478fa2b9674f142
+
 main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+  console.error(error)
+  process.exitCode = 1
+})
