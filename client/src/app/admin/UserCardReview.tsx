@@ -1,10 +1,13 @@
 import { PendingUser } from '@/interfaces/pending-users'
 import { db, storage } from '@/services/firebase'
-import convertBytesToImage from '@/utils/convert-bytes-to-image'
+import uploadImageIpfsFromBlob from '@/services/web3-storage/upload-image-ipfs-from-blob'
+import uploadMetadataIpfs from '@/services/web3-storage/upload-metadata-ipfs'
+import { makeStorageClient } from '@/services/web3-storage/web3-storage.client'
+import convertBlobToImage from '@/utils/convert-blob-to-image'
 import { Box, Modal, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { deleteDoc, doc } from 'firebase/firestore/lite'
-import { deleteObject, getBytes, ref } from 'firebase/storage'
+import { deleteObject, getBlob, ref } from 'firebase/storage'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -41,6 +44,7 @@ const initialConfirmationModal = { show: false, title: '', description: '', acti
 
 function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: PendingUserCardReviewProps) {
   const [userImage, setUserImage] = useState('')
+  const [userImageBlob, setUserImageBlob] = useState<Blob | null>(null)
   const [
     { show: showModal, action: actionModal, description: descriptionModal, title: titleModal },
     setConfirmationModal
@@ -68,19 +72,45 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
     removeUserFromPendingUsers(publicKey)
   }
 
+  const createUser = async (publicKey: PendingUser['public_key']) => {
+    if (!userImageBlob || !publicKey) return
+    const cid = await uploadImageIpfsFromBlob(userImageBlob, publicKey)
+    console.log('cid:', cid)
+  }
+
   useEffect(() => {
-    getBytes(storageRef)
-      .then((bytes) => {
-        const imageConverted = convertBytesToImage(bytes)
+    getBlob(storageRef)
+      .then((blob) => {
+        console.log('blob:', blob)
+        setUserImageBlob(blob)
+        const imageConverted = convertBlobToImage(blob)
         setUserImage(imageConverted)
       })
       .catch((error) => {
         setUserImage('')
       })
+
+    async function test() {
+      const client = makeStorageClient()
+      const res = await client.get('bafybeibh3u4pmlwg3wh2kjqp6omvuvswiahbzvwrdyjgvhjy7iv4h5djbm')
+      console.log('res:', res)
+      const files = await res?.files()
+      console.log('res:', files?.[0])
+
+      const imageConverted = convertBlobToImage(files?.[0] as Blob)
+      console.log('imageConverted 2:', imageConverted)
+    }
+
+    test()
   }, [])
 
   const handleResetModalState = () => {
     setConfirmationModal(initialConfirmationModal)
+  }
+
+  const uploadMetadataUser = async (publicKey: PendingUser['public_key']) => {
+    const cidURI = uploadMetadataIpfs('bafybeibh3u4pmlwg3wh2kjqp6omvuvswiahbzvwrdyjgvhjy7iv4h5djbm', pendingUser)
+    console.log('cidURI:', cidURI)
   }
 
   return (
@@ -127,8 +157,21 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
             }>
             Remove
           </Button>
-          <Button variant='contained' color='success'>
+          <Button
+            variant='contained'
+            color='success'
+            onClick={() =>
+              setConfirmationModal({
+                show: true,
+                title: 'Create user : ',
+                description: 'Are you sure you want to create this user?',
+                action: () => createUser(public_key)
+              })
+            }>
             Validate
+          </Button>
+          <Button variant='contained' color='success' onClick={() => uploadMetadataUser(pendingUser.public_key)}>
+            Upload
           </Button>
         </div>
       </StyledUserCardContainer>
