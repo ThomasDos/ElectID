@@ -2,17 +2,21 @@ import { ethers } from 'hardhat'
 
 async function main() {
   const [owner] = await ethers.getSigners()
+  console.log('owner:', owner)
 
   const transactionCount = await owner.getNonce()
+  console.log('transactionCount:', transactionCount)
 
   // gets the address of the token before it is deployed
-  const futureAddress = ethers.getContractAddress({
+  const futureAddress = ethers.getCreateAddress({
     from: owner.address,
     nonce: transactionCount + 1
   })
+  console.log('futureAddress:', futureAddress)
 
   const EIDGovernor = await ethers.getContractFactory('EIDGovernor')
   const governor = await EIDGovernor.deploy(futureAddress)
+  console.log('governor:', governor)
 
   const ElectID = await ethers.getContractFactory('ElectID')
   const token = await ElectID.deploy(governor.address)

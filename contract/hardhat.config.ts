@@ -19,6 +19,11 @@ const config: HardhatUserConfig = {
       url: process.env.TESTNET_SEPOLIA_ALCHEMY_URL,
       accounts: [process.env.PRIVATE_KEY as string, process.env.PRIVATE_KEY_2 as string]
     }
+  },
+  etherscan: {
+    apiKey: {
+      sepolia: process.env.ETHERSCAN_API_KEY as string
+    }
   }
 }
 
