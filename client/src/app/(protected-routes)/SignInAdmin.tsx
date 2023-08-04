@@ -26,6 +26,12 @@ function SignInAdmin() {
   return (
     <main className='flex flex-col text-center'>
       <h1 className='my-10 text-xl font-bold'>Apply for your new ID</h1>
+
+      <div className='flex flex-col my-4'>
+        <h3>FOR DEMO PURPOSE</h3>
+        <span>id: admin@test.com</span>
+        <span>password: Admin123.</span>
+      </div>
       <form
         onSubmit={handleSubmit((data) => handleSignIn(data.email, data.password))}
         className='text-black flex flex-col gap-2 items-center'>
