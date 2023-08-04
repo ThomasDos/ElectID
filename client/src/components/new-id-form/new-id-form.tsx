@@ -1,6 +1,6 @@
 'use client'
-import { PendingUser } from '@/interfaces/pending-users'
 import { db, storage } from '@/services/firebase'
+import { PendingUser } from '@/types/pending-users'
 import resizeImage from '@/utils/resize-image.utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '@mui/material'

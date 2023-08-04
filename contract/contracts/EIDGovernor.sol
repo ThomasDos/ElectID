@@ -7,12 +7,20 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 
-contract EIDGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction {
-    constructor(IVotes _token)
+contract EIDGovernor is
+    Governor,
+    GovernorSettings,
+    GovernorCountingSimple,
+    GovernorVotes,
+    GovernorVotesQuorumFraction
+{
+    constructor(
+        IVotes _token
+    )
         Governor("EIDGovernor")
-        GovernorSettings(5 /* 1 minute */, 50 /* 10 minutes */, 0)
+        GovernorSettings(5 /* 1 minute */, 50 /* 10 minute */, 0)
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(50)
+        GovernorVotesQuorumFraction(4)
     {}
 
     // The following functions are overrides required by Solidity.
@@ -35,7 +43,9 @@ contract EIDGovernor is Governor, GovernorSettings, GovernorCountingSimple, Gove
         return super.votingPeriod();
     }
 
-    function quorum(uint256 blockNumber)
+    function quorum(
+        uint256 blockNumber
+    )
         public
         view
         override(IGovernor, GovernorVotesQuorumFraction)

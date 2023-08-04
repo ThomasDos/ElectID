@@ -13,7 +13,7 @@ const config: HardhatUserConfig = {
       }
     }
   },
-  defaultNetwork: 'hardhat',
+  defaultNetwork: 'sepolia',
   networks: {
     sepolia: {
       url: process.env.TESTNET_SEPOLIA_ALCHEMY_URL,

@@ -1,5 +1,5 @@
-import { PendingUser } from '@/interfaces/pending-users'
 import { db } from '@/services/firebase'
+import { PendingUser } from '@/types/pending-users'
 import { collection, getDocs } from 'firebase/firestore/lite'
 import { useEffect, useState } from 'react'
 import UserCardReview from './UserCardReview'

@@ -1,4 +1,4 @@
-import { PendingUser } from '@/interfaces/pending-users'
+import { PendingUser } from '@/types/pending-users'
 import { makeStorageClient } from './web3-storage.client'
 
 async function uploadMetadataIpfs(cidImage: string, user: PendingUser) {
@@ -34,9 +34,7 @@ async function uploadMetadataIpfs(cidImage: string, user: PendingUser) {
   const files = [new File([blob], `${user.public_key}.json`)]
   const client = makeStorageClient()
   const cid = await client.put(files)
-  console.log('cid:', cid)
   const cidURI = `https://${cid}.ipfs.dweb.link/${user.public_key}.json`
-  console.log('cidURI:', cidURI)
   return cidURI
 }
 

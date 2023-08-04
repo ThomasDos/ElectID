@@ -9,7 +9,6 @@ async function main() {
 }
 
 // EIDGovernor address : 0xc36FFf14198BC269D2316CcDDEAD60D5c763DBB8
-// ElectID address : 0xE353Cf5865932B3Fdb1C506fB478fa2b9674f142
 
 main().catch((error) => {
   console.error(error)

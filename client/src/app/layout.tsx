@@ -1,6 +1,6 @@
 'use client'
 import Navigation from '@/components/layout/navigation'
-import { config } from '@/services/connect-kit-client'
+import { config } from '@/services/blockchain/connect-kit-client'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'

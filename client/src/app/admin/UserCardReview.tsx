@@ -1,8 +1,8 @@
-import { PendingUser } from '@/interfaces/pending-users'
+import Dots from '@/components/ui/Dots'
+import viemClient from '@/services/blockchain/create-viem-client'
+import uploadMetadataAndMintNft from '@/services/blockchain/upload-metadata-and-mint-nft'
 import { db, storage } from '@/services/firebase'
-import uploadImageIpfsFromBlob from '@/services/web3-storage/upload-image-ipfs-from-blob'
-import uploadMetadataIpfs from '@/services/web3-storage/upload-metadata-ipfs'
-import { makeStorageClient } from '@/services/web3-storage/web3-storage.client'
+import { PendingUser } from '@/types/pending-users'
 import convertBlobToImage from '@/utils/convert-blob-to-image'
 import { Box, Modal, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -44,6 +44,7 @@ const initialConfirmationModal = { show: false, title: '', description: '', acti
 
 function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: PendingUserCardReviewProps) {
   const [userImage, setUserImage] = useState('')
+  const [mintIsLoading, setMintIsLoading] = useState(false)
   const [userImageBlob, setUserImageBlob] = useState<Blob | null>(null)
   const [
     { show: showModal, action: actionModal, description: descriptionModal, title: titleModal },
@@ -55,6 +56,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
   const storageRef = ref(storage, public_key)
 
   const removeUser = async (publicKey: PendingUser['public_key']) => {
+    handleResetModalState()
     const deleteFirestore = deleteDoc(doc(db, 'pending_users', publicKey))
     toast.promise(deleteFirestore, {
       loading: 'Loading',
@@ -72,16 +74,34 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
     removeUserFromPendingUsers(publicKey)
   }
 
-  const createUser = async (publicKey: PendingUser['public_key']) => {
-    if (!userImageBlob || !publicKey) return
-    const cid = await uploadImageIpfsFromBlob(userImageBlob, publicKey)
-    console.log('cid:', cid)
+  const createUser = async (user: PendingUser) => {
+    handleResetModalState()
+    setMintIsLoading(true)
+    if (!userImageBlob || !user || !window) return
+    const hash = await uploadMetadataAndMintNft({ userImageBlob, user })
+    const publicKey = user.public_key
+    if (!hash) return
+    const transaction = await viemClient.waitForTransactionReceipt({
+      hash
+    })
+    const deleteFirestore = deleteDoc(doc(db, 'pending_users', publicKey))
+
+    const bucketImageRef = ref(storage, publicKey)
+    const deleteStorage = deleteObject(bucketImageRef)
+    toast.promise(deleteStorage, {
+      loading: 'Loading',
+      success: 'User was created successfully ' + transaction.transactionHash,
+      error: 'Error when deleting user from DB'
+    })
+
+    removeUserFromPendingUsers(publicKey)
+
+    setMintIsLoading(false)
   }
 
   useEffect(() => {
     getBlob(storageRef)
       .then((blob) => {
-        console.log('blob:', blob)
         setUserImageBlob(blob)
         const imageConverted = convertBlobToImage(blob)
         setUserImage(imageConverted)
@@ -89,41 +109,25 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
       .catch((error) => {
         setUserImage('')
       })
-
-    async function test() {
-      const client = makeStorageClient()
-      const res = await client.get('bafybeibh3u4pmlwg3wh2kjqp6omvuvswiahbzvwrdyjgvhjy7iv4h5djbm')
-      console.log('res:', res)
-      const files = await res?.files()
-      console.log('res:', files?.[0])
-
-      const imageConverted = convertBlobToImage(files?.[0] as Blob)
-      console.log('imageConverted 2:', imageConverted)
-    }
-
-    test()
   }, [])
 
   const handleResetModalState = () => {
     setConfirmationModal(initialConfirmationModal)
   }
 
-  const uploadMetadataUser = async (publicKey: PendingUser['public_key']) => {
-    const cidURI = uploadMetadataIpfs('bafybeibh3u4pmlwg3wh2kjqp6omvuvswiahbzvwrdyjgvhjy7iv4h5djbm', pendingUser)
-    console.log('cidURI:', cidURI)
-  }
-
   return (
     <>
       <StyledUserCardContainer className='flex flex-col p-2 sm:px-4 sm:py-6 shadow-md hover:shadow-lg hover:shadow-white shadow-white'>
         <div className='flex items-center gap-2'>
-          <Image
-            src={userImage}
-            width={200}
-            height={200}
-            alt='user picture'
-            className='h-[100px] w-[100px] sm:h-[200px] sm:w-[200px]'
-          />
+          {userImage && (
+            <Image
+              src={userImage}
+              width={200}
+              height={200}
+              alt='user picture'
+              className='h-[100px] w-[100px] sm:h-[200px] sm:w-[200px]'
+            />
+          )}
           <div className='flex flex-col gap-2 text-sm'>
             <div>
               <StyledRowTitle>Public key:</StyledRowTitle>
@@ -148,6 +152,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
             variant='contained'
             color='error'
             onClick={() =>
+              !mintIsLoading &&
               setConfirmationModal({
                 show: true,
                 title: 'Remove user : ',
@@ -155,23 +160,21 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
                 action: () => removeUser(public_key)
               })
             }>
-            Remove
+            {mintIsLoading ? <Dots /> : 'Remove'}
           </Button>
           <Button
             variant='contained'
             color='success'
             onClick={() =>
+              !mintIsLoading &&
               setConfirmationModal({
                 show: true,
                 title: 'Create user : ',
                 description: 'Are you sure you want to create this user?',
-                action: () => createUser(public_key)
+                action: () => createUser(pendingUser)
               })
             }>
-            Validate
-          </Button>
-          <Button variant='contained' color='success' onClick={() => uploadMetadataUser(pendingUser.public_key)}>
-            Upload
+            {mintIsLoading ? <Dots /> : 'Validate'}
           </Button>
         </div>
       </StyledUserCardContainer>
