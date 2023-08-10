@@ -1,3 +1,4 @@
+'use client'
 import { auth } from '@/services/firebase'
 import { useAppSettingsStore } from '@/store/app-settings'
 import { ConnectKitButton } from 'connectkit'
