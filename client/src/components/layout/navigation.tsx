@@ -11,7 +11,6 @@ import styled from 'styled-components'
 
 const StyledNavTitle = styled.div<{ isCurrent: boolean }>`
   color: #333;
-  font-family: Poppins;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
