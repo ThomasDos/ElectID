@@ -9,18 +9,16 @@
 #4A55A2
 */
 :root {
-    --main-color: #4a55a2;
-    --background-color: #c5dff8;
+  --color-primary: #538b56;
+  --background-color: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --main-color: #c5dff8;
-        --background-color: #4a55a2;
-    }
+  :root {
+    --color-primary: #538b56;
+    --background-color: #fff;
+  }
 }
-
-body {
-    color: var(--main-color);
-    background: var(--background-color);
+* {
+  font-family: Poppins, sans-serif;
 }
