@@ -14,6 +14,10 @@ const StyledButtonSuccess = styled.button`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: -5px 9px 0px 0px rgba(83, 139, 86, 0.49);
+  }
 `
 
 interface ButtonSuccessProps {
