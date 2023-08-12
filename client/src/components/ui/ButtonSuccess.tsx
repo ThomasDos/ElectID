@@ -9,11 +9,8 @@ const StyledButtonSuccess = styled.button`
   align-items: center;
   gap: 10px;
   color: #fff;
-  font-family: Poppins;
   font-size: 21px;
-  font-style: normal;
   font-weight: 600;
-  line-height: normal;
   &:hover {
     transform: translateY(-2px);
     box-shadow: -5px 9px 0px -2px rgba(83, 139, 86, 0.49);
