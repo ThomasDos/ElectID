@@ -1,5 +1,7 @@
 'use client'
 
+import TopVoters from '@/components/home/TopVoters'
+import Votes from '@/components/home/Votes'
 import ButtonSuccess from '@/components/ui/ButtonSuccess'
 import Image from 'next/image'
 import styled from 'styled-components'
@@ -20,9 +22,9 @@ const StyledH2Custom = styled.h2`
 
 export default function Home() {
   return (
-    <main className='flex flex-col items-center px-40 w-screen'>
-      <div className='flex'>
-        <div className='flex flex-col flex-[2] justify-center '>
+    <main className='flex flex-col items-center px-40'>
+      <div className='flex justify-center py-8'>
+        <div className='flex flex-col justify-center w-3/5 pr-4'>
           <StyledH1Custom>Decentralized Voting for a Trustworthy Democracy</StyledH1Custom>
           <StyledH2Custom>
             Welcome to our platform where cutting-edge technology meets democratic participation. Explore the world of
@@ -30,10 +32,13 @@ export default function Home() {
           </StyledH2Custom>
           <ButtonSuccess text='Get Started' className='mt-10' />
         </div>
-        <div className='flex-[3] flex justify-end'>
-          <Image className='' src='/svg/home-passport-landing.svg' alt='' width={750} height={750} />
+        <div className='flex justify-end'>
+          <Image src='/svg/home-passport-landing.svg' alt='' width={750} height={750} />
         </div>
       </div>
+
+      <Votes />
+      <TopVoters />
     </main>
   )
 }
