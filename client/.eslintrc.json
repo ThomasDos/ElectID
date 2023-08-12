@@ -9,7 +9,7 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["./tsconfig.json"]
+        "project": ["./client/tsconfig.json"]
       },
       "rules": {
         "@typescript-eslint/explicit-module-boundary-types": "off",

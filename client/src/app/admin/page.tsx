@@ -1,14 +1,17 @@
 'use client'
-import ProtectedRoutes from '../(protected-routes)/ProtectedRoutes'
+import ProtectedRoutesAdmin from '../(protected-routes)/admin/ProtectedRoutesAdmin'
+import ProtectedRoutesWallet from '../(protected-routes)/wallet/ProtectedRoutesWallet'
 import AdminView from './AdminView'
 
 function Admin() {
   return (
-    <ProtectedRoutes>
-      <main>
-        <AdminView />
-      </main>
-    </ProtectedRoutes>
+    <ProtectedRoutesWallet>
+      <ProtectedRoutesAdmin>
+        <main>
+          <AdminView />
+        </main>
+      </ProtectedRoutesAdmin>
+    </ProtectedRoutesWallet>
   )
 }
 

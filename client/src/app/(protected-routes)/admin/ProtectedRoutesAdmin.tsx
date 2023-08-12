@@ -1,7 +1,7 @@
 import { useAppSettingsStore } from '@/store/app-settings'
 import SignInAdmin from './SignInAdmin'
 
-function ProtectedRoutes({ children }: { children: React.ReactNode }) {
+function ProtectedRoutesAdmin({ children }: { children: React.ReactNode }) {
   const isAdmin = useAppSettingsStore((state) => state.isAdmin)
 
   if (!isAdmin) {
@@ -11,4 +11,4 @@ function ProtectedRoutes({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>
 }
 
-export default ProtectedRoutes
+export default ProtectedRoutesAdmin

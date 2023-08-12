@@ -1,10 +1,10 @@
 'use client'
+
 import { db, storage } from '@/services/firebase'
 import { PendingUser } from '@/types/pending-users'
 import resizeImage from '@/utils/resize-image.utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import TextField from '@mui/material/TextField'
-import { ConnectKitButton } from 'connectkit'
 import { doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import { ref, uploadBytes } from 'firebase/storage'
 import { isEmpty } from 'lodash'
@@ -124,16 +124,6 @@ function NewIDForm() {
     return (
       <div className='flex items-center justify-center h-[80vh]'>
         <Dots dotsColor='var(--color-primary)' />
-      </div>
-    )
-  }
-
-  if (!walletData) {
-    return (
-      <div className='flex flex-col items-center justify-center gap-6'>
-        <Image src='/svg/safe-user.svg' width={500} height={450} alt='safe and wallet' />
-        <StyledH1Custom>Please connect your wallet</StyledH1Custom>
-        <ConnectKitButton theme='minimal' />
       </div>
     )
   }

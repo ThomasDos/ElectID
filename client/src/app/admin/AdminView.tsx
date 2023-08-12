@@ -1,8 +1,26 @@
+import ButtonSuccess from '@/components/ui/ButtonSuccess'
 import { db } from '@/services/firebase'
 import { PendingUser } from '@/types/pending-users'
 import { collection, getDocs } from 'firebase/firestore/lite'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import UserCardReview from './UserCardReview'
+import styled from 'styled-components'
+
+const StyledH1 = styled.h1`
+  color: #333;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 73px; /* 130.357% */
+  letter-spacing: -0.56px;
+  margin-bottom: 40px;
+`
+
+const StyledH2 = styled.h2`
+  color: #333;
+  font-size: 20px;
+  line-height: 33px; /* 165% */
+  margin-bottom: 40px;
+`
 
 function AdminView() {
   const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([])
@@ -21,25 +39,23 @@ function AdminView() {
       setPendingUsers(pendingUsersTemp)
     })
   }, [])
-  return (
-    <>
-      <div className='px-10'>
-        <div className='flex flex-col text-center '>
-          <div>Dashboard Admin</div>
-          <span>You have {pendingUsers.length} pending user(s) to review</span>
-        </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center my-5'>
-          {pendingUsers.map((pendingUser) => (
-            <UserCardReview
-              pendingUser={pendingUser}
-              key={pendingUser.public_key}
-              removeUserFromPendingUsers={(publicKey) => removeUserFromPendingUsers(publicKey)}
-            />
-          ))}
+  return (
+    <main className='flex flex-col items-center px-40'>
+      <div className='flex justify-center py-8'>
+        <div className='flex flex-col justify-center w-3/5 pr-4'>
+          <StyledH1>Admin Dashboard</StyledH1>
+          <StyledH2>
+            Welcome to our platform where cutting-edge technology meets democratic participation. Explore the world of
+            decentralized identity voting.
+          </StyledH2>
+          <ButtonSuccess className='mt-10'>Get Started</ButtonSuccess>
+        </div>
+        <div className='flex justify-end'>
+          <Image src='/svg/phone-validation-id.svg' alt='' width={750} height={750} />
         </div>
       </div>
-    </>
+    </main>
   )
 }
 
