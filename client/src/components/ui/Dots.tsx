@@ -61,11 +61,12 @@ const StyledDots = styled.div<{ dotsColor: string }>`
 
 interface DotsProps {
   dotsColor?: string
+  className?: string
 }
 
-export default function Dots({ dotsColor = 'white' }: DotsProps) {
+export default function Dots({ dotsColor = 'white', className }: DotsProps) {
   return (
-    <StyledDots dotsColor={dotsColor}>
+    <StyledDots dotsColor={dotsColor} className={className}>
       <div />
       <div />
       <div />

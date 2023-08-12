@@ -16,20 +16,21 @@ const StyledButtonSuccess = styled.button`
   line-height: normal;
   &:hover {
     transform: translateY(-2px);
-    box-shadow: -5px 9px 0px 0px rgba(83, 139, 86, 0.49);
+    box-shadow: -5px 9px 0px -2px rgba(83, 139, 86, 0.49);
   }
 `
 
 interface ButtonSuccessProps {
   onClick?: () => void
-  text: string
+  children: React.ReactNode
   className?: string
+  disabled?: boolean
 }
 
-function ButtonSuccess({ onClick, text, className }: ButtonSuccessProps) {
+function ButtonSuccess({ onClick, children, className, disabled }: ButtonSuccessProps) {
   return (
-    <StyledButtonSuccess onClick={onClick} className={className}>
-      {text}
+    <StyledButtonSuccess onClick={onClick} className={className} disabled={disabled}>
+      {children}
     </StyledButtonSuccess>
   )
 }

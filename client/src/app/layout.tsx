@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <WagmiConfig config={config}>
       <ConnectKitProvider>
         <html lang='en'>
-          <body className={`${poppins.className} min-h-screen`}>
+          <body className={`${poppins.className} min-h-screen max-w-screen`}>
             <Navigation />
             {children}
             <Toaster />
