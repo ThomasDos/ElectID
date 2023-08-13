@@ -1,5 +1,5 @@
-import { ELECTID_ABI } from '@/app/(constant)/CONTRACT_ABI'
-import { ELECTID_CONTRACT_ADDRESS } from '@/app/(constant)/CONTRACT_ADDRESS'
+import { ELECTID_ABI } from '@/constant/CONTRACT_ABI'
+import { ELECTID_CONTRACT_ADDRESS } from '@/constant/CONTRACT_ADDRESS'
 import uploadImageIpfsFromBlob from '@/services/blockchain/web3-storage/upload-image-ipfs-from-blob'
 import uploadMetadataIpfs from '@/services/blockchain/web3-storage/upload-metadata-ipfs'
 import { PendingUser } from '@/types/pending-users'

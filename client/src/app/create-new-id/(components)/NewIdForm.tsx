@@ -1,10 +1,10 @@
 'use client'
 
 import ButtonSuccess from '@/components/ui/ButtonSuccess'
+import Input from '@/components/ui/Input'
 import { db, storage } from '@/services/firebase'
 import resizeImage from '@/utils/resize-image.utils'
 import { yupResolver } from '@hookform/resolvers/yup'
-import TextField from '@mui/material/TextField'
 import { doc, setDoc } from 'firebase/firestore/lite'
 import { ref, uploadBytes } from 'firebase/storage'
 import Image from 'next/image'
@@ -23,8 +23,8 @@ const StyledFormCard = styled.div`
   box-shadow: 0px 4.81561803817749px 4.81561803817749px 0px rgba(85, 139, 86, 0.24);
   display: flex;
   flex-direction: column;
-  flex: 1;
   padding: 40px;
+  min-width: 35vw;
 `
 
 interface FormValues {
@@ -83,9 +83,9 @@ function NewIdForm() {
       <form
         onSubmit={handleSubmit((e) => onSubmit(e as any))}
         className='text-black flex flex-col gap-2 items-center w-full'>
-        <TextField id='outlined-basic' label='First Name' variant='outlined' {...register('firstName')} />
+        <Input placeholder='John' id='firstname' labelName='firstname' label='First Name' {...register('firstName')} />
         {errors.firstName && <span className='text-red-800 font-bold'>{errors.firstName.message}</span>}
-        <TextField id='outlined-basic' label='Last Name' variant='outlined' {...register('lastName')} />
+        <Input id='lastname' labelName='lastname' label='Last Name' placeholder='Doe' {...register('lastName')} />
         {errors.lastName && <span className='text-red-800 font-bold'>{errors.lastName.message}</span>}
         <ButtonSuccess>
           Click to upload your photo
