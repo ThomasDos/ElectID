@@ -1,12 +1,12 @@
 import ProtectedRoutesWallet from '@app/(protected-routes)/wallet/ProtectedRoutesWallet'
-import NewIDForm from './(components)/new-id-form'
+import CreateNewId from './(components)/CreateNewId'
 
-function CreateNewId() {
+function CreateNewIdPage() {
   return (
     <ProtectedRoutesWallet>
-      <NewIDForm />
+      <CreateNewId />
     </ProtectedRoutesWallet>
   )
 }
 
-export default CreateNewId
+export default CreateNewIdPage
