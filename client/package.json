@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "git": "cd .. && git add . && git cz && git push && cd client/"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -29,6 +30,7 @@
     "eslint-config-next": "13.4.9",
     "eslint-plugin-unused-imports": "^3.0.0",
     "firebase": "^10.0.0",
+    "git-cz": "^4.9.0",
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "next": "13.4.9",

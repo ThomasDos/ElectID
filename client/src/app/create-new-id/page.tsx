@@ -1,12 +1,10 @@
-import NewIDForm from '@/components/new-id-form/new-id-form'
-import ProtectedRoutesWallet from '../(protected-routes)/wallet/ProtectedRoutesWallet'
+import ProtectedRoutesWallet from '@app/(protected-routes)/wallet/ProtectedRoutesWallet'
+import NewIDForm from './(components)/new-id-form'
 
 function CreateNewId() {
   return (
     <ProtectedRoutesWallet>
-      <div className='flex flex-col items-center justify-center h-full'>
-        <NewIDForm />
-      </div>
+      <NewIDForm />
     </ProtectedRoutesWallet>
   )
 }

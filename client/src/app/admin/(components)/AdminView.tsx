@@ -55,6 +55,10 @@ function AdminView() {
           <Image src='/svg/phone-validation-id.svg' alt='' width={750} height={750} />
         </div>
       </div>
+
+      <div>
+        <h2>Pending users</h2>
+      </div>
     </main>
   )
 }

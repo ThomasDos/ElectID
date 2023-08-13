@@ -1,5 +1,5 @@
-import { ELECTID_ABI } from '@/constant/CONTRACT_ABI'
-import { ELECTID_CONTRACT_ADDRESS } from '@/constant/CONTRACT_ADDRESS'
+import { ELECTID_ABI } from '@/app/(constant)/CONTRACT_ABI'
+import { ELECTID_CONTRACT_ADDRESS } from '@/app/(constant)/CONTRACT_ADDRESS'
 import { getContract } from 'viem'
 import viemClient from './create-viem-client'
 

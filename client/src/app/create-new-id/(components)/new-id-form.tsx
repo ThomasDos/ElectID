@@ -1,5 +1,7 @@
 'use client'
 
+import ButtonSuccess from '@/components/ui/ButtonSuccess'
+import Dots from '@/components/ui/Dots'
 import { db, storage } from '@/services/firebase'
 import { PendingUser } from '@/types/pending-users'
 import resizeImage from '@/utils/resize-image.utils'
@@ -15,8 +17,6 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { useWalletClient } from 'wagmi'
-import ButtonSuccess from '../ui/ButtonSuccess'
-import Dots from '../ui/Dots'
 import newIDFormSchema from './new-id-form-schema'
 
 const StyledH1Form = styled.h1`
@@ -25,14 +25,14 @@ const StyledH1Form = styled.h1`
   font-weight: 800;
   line-height: 73px; /* 130.357% */
   letter-spacing: -0.56px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `
 
 const StyledH2Form = styled.h2`
   color: #333;
   font-size: 20px;
   line-height: 33px; /* 165% */
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `
 
 const StyledH1Custom = styled.h1`
@@ -122,7 +122,7 @@ function NewIDForm() {
 
   if (dbIsLoading) {
     return (
-      <div className='flex items-center justify-center h-[80vh]'>
+      <div className='flex items-center justify-center h-[80vh]  flex-col'>
         <Dots dotsColor='var(--color-primary)' />
       </div>
     )
@@ -130,7 +130,7 @@ function NewIDForm() {
 
   if (!isEmpty(pendingUser)) {
     return (
-      <div className='flex flex-col items-center justify-center gap-6'>
+      <div className='flex flex-col items-center justify-center gap-6 h-full'>
         <Image src='/svg/pending-application.svg' width={600} height={540} alt='pending application hourglass' />
         <StyledH1Custom>
           You have already a pending application created the{' '}
@@ -142,7 +142,7 @@ function NewIDForm() {
   }
 
   return (
-    <div className='flex justify-between w-full px-60 gap-10'>
+    <div className='flex justify-between w-full px-60 gap-10 items-center'>
       <div className='flex flex-col flex-1'>
         <StyledH1Form>Request for a new ID card</StyledH1Form>
         <StyledH2Form>
