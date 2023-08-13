@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 const StyledButtonSuccess = styled.button`
-  width: fit-content;
   border-radius: 15px;
   background: linear-gradient(270deg, rgba(78, 153, 85, 0.77) 0%, #518a55 100%);
   display: inline-flex;
@@ -11,6 +10,7 @@ const StyledButtonSuccess = styled.button`
   color: #fff;
   font-size: 21px;
   font-weight: 600;
+  justify-content: center;
   &:hover {
     transform: translateY(-2px);
     box-shadow: -5px 9px 0px -2px rgba(83, 139, 86, 0.49);

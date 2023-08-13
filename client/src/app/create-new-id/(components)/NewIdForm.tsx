@@ -7,13 +7,13 @@ import resizeImage from '@/utils/resize-image.utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { doc, setDoc } from 'firebase/firestore/lite'
 import { ref, uploadBytes } from 'firebase/storage'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { useWalletClient } from 'wagmi'
+import UploadUserImage from './UploadUserImage'
 import newIDFormSchema from './new-id-form-schema'
 
 const StyledFormCard = styled.div`
@@ -25,6 +25,13 @@ const StyledFormCard = styled.div`
   flex-direction: column;
   padding: 40px;
   min-width: 35vw;
+`
+
+const StyledH2 = styled.h2`
+  color: #2b2f32;
+  font-size: 26.486px;
+  font-weight: 500;
+  margin-bottom: 40px;
 `
 
 interface FormValues {
@@ -48,6 +55,11 @@ function NewIdForm() {
     resolver: yupResolver(newIDFormSchema())
   })
 
+  console.log('isValid', isValid)
+  console.log('errors', errors)
+  console.log('IMAGE', watch('photo'))
+  console.log('firstName', watch('firstName'))
+  console.log('lastName', watch('photo'))
   useEffect(() => {
     if (!walletData?.account?.address) return
     setValue('address', walletData.account.address)
@@ -83,28 +95,17 @@ function NewIdForm() {
       <form
         onSubmit={handleSubmit((e) => onSubmit(e as any))}
         className='text-black flex flex-col gap-2 items-center w-full'>
-        <Input placeholder='John' id='firstname' labelName='firstname' label='First Name' {...register('firstName')} />
+        <StyledH2>Register your ID</StyledH2>
+        <Input placeholder='John' id='firstName' labelName='firstName' label='First Name' {...register('firstName')} />
         {errors.firstName && <span className='text-red-800 font-bold'>{errors.firstName.message}</span>}
-        <Input id='lastname' labelName='lastname' label='Last Name' placeholder='Doe' {...register('lastName')} />
+        <Input id='lastName' labelName='lastName' label='Last Name' placeholder='Doe' {...register('lastName')} />
         {errors.lastName && <span className='text-red-800 font-bold'>{errors.lastName.message}</span>}
-        <ButtonSuccess>
-          Click to upload your photo
-          <div className='absolute'>
-            <input
-              {...register('photo')}
-              type='file'
-              accept='image/*'
-              multiple={false}
-              style={{ opacity: 0, position: 'relative', cursor: 'pointer' }}
-            />
-          </div>
-        </ButtonSuccess>
-        {!!watch('photo')?.length && (
-          <Image src={URL.createObjectURL(watch('photo')[0])} width={200} height={200} alt='user-image' />
-        )}
-        {errors.photo && <span className='text-red-800 font-bold'>{errors.photo.message}</span>}
+        <UploadUserImage setPhoto={(pic: File[]) => setValue('photo', pic)} />
 
-        {isValid && <ButtonSuccess disabled={isSubmitting}>SUBMIT</ButtonSuccess>}
+        {errors.photo && <span className='text-red-800 font-bold'>{errors.photo.message}</span>}
+        <ButtonSuccess disabled={isSubmitting} className='w-full'>
+          SUBMIT
+        </ButtonSuccess>
       </form>
     </StyledFormCard>
   )

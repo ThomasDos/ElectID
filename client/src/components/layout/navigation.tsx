@@ -28,7 +28,7 @@ function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className='flex justify-between p-6 mb-10'>
+    <nav className='flex justify-between p-6 mb-4'>
       <Link href='/'>
         <div className='flex items-center gap-2'>
           <Image src='/svg/electid-logo.svg' alt='ElectID Logo' width={50} height={50} />

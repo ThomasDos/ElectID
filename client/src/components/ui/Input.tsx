@@ -1,31 +1,29 @@
 import styled from 'styled-components'
 
 const StyledInput = styled.input`
-  border: 1px solid #dde2e5;
-  border-radius: 8px;
-  padding: 10px;
   width: 100%;
-  margin-bottom: 20px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #333;
+  display: flex;
+  height: 62.603px;
+  padding: 9.631px 19.262px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12.039px;
+  flex-shrink: 0;
+  border-radius: 9.631px;
+  background: rgba(239, 241, 249, 0.6);
+`
+
+const StyledLabel = styled.label`
+  color: #5e6366;
+  font-size: 14.447px;
   font-weight: 500;
-  background: #fff;
-  box-shadow: 0px 4.81561803817749px 4.81561803817749px 0px rgba(85, 139, 86, 0.24);
-  &:focus {
-    outline: none;
-    border: 1px solid #333;
-  }
+  margin-right: auto;
 `
 
 function Input(props: any) {
   return (
     <>
-      {props.label && (
-        <label htmlFor={props.labelName} className='mr-auto'>
-          {props.label}
-        </label>
-      )}
+      {props.label && <StyledLabel htmlFor={props.labelName}>{props.label}</StyledLabel>}
       <StyledInput {...props} />
     </>
   )

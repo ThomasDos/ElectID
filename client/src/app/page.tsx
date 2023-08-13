@@ -30,7 +30,7 @@ export default function Home() {
             Welcome to our platform where cutting-edge technology meets democratic participation. Explore the world of
             decentralized identity voting.
           </StyledH2Custom>
-          <ButtonSuccess className='mt-10'>Get Started</ButtonSuccess>
+          <ButtonSuccess className='mt-10 w-max'>Get Started</ButtonSuccess>
         </div>
         <div className='flex justify-end'>
           <Image src='/svg/home-passport-landing.svg' alt='' width={750} height={750} />
