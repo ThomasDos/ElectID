@@ -117,7 +117,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
 
   return (
     <>
-      <StyledUserCardContainer className='flex flex-col p-2 sm:px-4 sm:py-6 shadow-md hover:shadow-lg hover:shadow-white shadow-white'>
+      <StyledUserCardContainer className='flex flex-col p-2 sm:px-4 sm:py-6 shadow-md hover:shadow-lg hover:shadow-white shadow-white '>
         <div className='flex items-center gap-2'>
           {userImage && (
             <Image
