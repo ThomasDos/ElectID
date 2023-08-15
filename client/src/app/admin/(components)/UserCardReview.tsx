@@ -1,3 +1,5 @@
+import ButtonError from '@/components/ui/ButtonError'
+import ButtonSuccess from '@/components/ui/ButtonSuccess'
 import Dots from '@/components/ui/Dots'
 import viemClient from '@/services/blockchain/create-viem-client'
 import uploadMetadataAndMintNft from '@/services/blockchain/upload-metadata-and-mint-nft'
@@ -5,7 +7,6 @@ import { db, storage } from '@/services/firebase'
 import { PendingUser } from '@/types/pending-users'
 import convertBlobToImage from '@/utils/convert-blob-to-image'
 import { Box, Modal, Typography } from '@mui/material'
-import Button from '@mui/material/Button'
 import { deleteDoc, doc } from 'firebase/firestore/lite'
 import { deleteObject, getBlob, ref } from 'firebase/storage'
 import Image from 'next/image'
@@ -84,7 +85,6 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
     const transaction = await viemClient.waitForTransactionReceipt({
       hash
     })
-    const deleteFirestore = deleteDoc(doc(db, 'pending_users', publicKey))
 
     const bucketImageRef = ref(storage, publicKey)
     const deleteStorage = deleteObject(bucketImageRef)
@@ -148,9 +148,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
           </div>
         </div>
         <div className='flex justify-center gap-6 py-4'>
-          <Button
-            variant='contained'
-            color='error'
+          <ButtonError
             onClick={() =>
               !mintIsLoading &&
               setConfirmationModal({
@@ -161,10 +159,8 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
               })
             }>
             {mintIsLoading ? <Dots /> : 'Remove'}
-          </Button>
-          <Button
-            variant='contained'
-            color='success'
+          </ButtonError>
+          <ButtonSuccess
             onClick={() =>
               !mintIsLoading &&
               setConfirmationModal({
@@ -175,7 +171,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
               })
             }>
             {mintIsLoading ? <Dots /> : 'Validate'}
-          </Button>
+          </ButtonSuccess>
         </div>
       </StyledUserCardContainer>
 
@@ -194,9 +190,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
               {firstname} {lastname}
             </Typography>
           </div>
-          <Button variant='contained' color='success' sx={{ fontSize: '12px' }} onClick={actionModal}>
-            {descriptionModal}
-          </Button>
+          <ButtonSuccess onClick={actionModal}>{descriptionModal}</ButtonSuccess>
         </Box>
       </Modal>
     </>
