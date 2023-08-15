@@ -1,3 +1,4 @@
+import { Controller, useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
 
 const StyledInput = styled.input`
@@ -20,12 +21,27 @@ const StyledLabel = styled.label`
   margin-right: auto;
 `
 
-function Input(props: any) {
+interface InputProps {
+  id: string
+  label?: string
+  labelName?: string
+  placeholder?: string
+}
+
+function Input({ id, label, labelName, placeholder }: InputProps) {
+  const { control } = useFormContext()
   return (
-    <>
-      {props.label && <StyledLabel htmlFor={props.labelName}>{props.label}</StyledLabel>}
-      <StyledInput {...props} />
-    </>
+    <Controller
+      control={control}
+      name={id}
+      render={({ field }) => (
+        <>
+          {label && <StyledLabel htmlFor={labelName}>{label}</StyledLabel>}
+
+          <StyledInput {...field} placeholder={placeholder} />
+        </>
+      )}
+    />
   )
 }
 

@@ -1,5 +1,6 @@
 import { getDefaultConfig } from 'connectkit'
-import { createConfig, sepolia } from 'wagmi'
+import { sepolia } from 'viem/chains'
+import { createConfig } from 'wagmi'
 
 export const config = createConfig(
   getDefaultConfig({

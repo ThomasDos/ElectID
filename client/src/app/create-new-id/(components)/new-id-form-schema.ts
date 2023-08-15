@@ -3,7 +3,6 @@ const MAX_FILE_SIZE = 1000000
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
 
 const validateImageType = (value: File) => {
-  console.log('VALUE >>>', value)
   if (value) {
     return SUPPORTED_FORMATS.includes(value.type)
   }
@@ -18,7 +17,6 @@ function newIDFormSchema() {
       .test({
         message: 'Please provide a supported file type',
         test: (files) => {
-          console.log('FILES >>>', files)
           if (!files?.[0]) return false
           return validateImageType(files[0])
         }
