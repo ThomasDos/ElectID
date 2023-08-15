@@ -106,7 +106,7 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
         const imageConverted = convertBlobToImage(blob)
         setUserImage(imageConverted)
       })
-      .catch((error) => {
+      .catch(() => {
         setUserImage('')
       })
   }, [])
