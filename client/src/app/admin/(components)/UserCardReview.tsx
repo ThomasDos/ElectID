@@ -16,7 +16,7 @@ import styled from 'styled-components'
 
 const StyledUserCardContainer = styled.div`
   border-radius: 20px;
-  background-color: #7895cb;
+  background-color: #f8f8f8;
 `
 
 const StyledRowTitle = styled.div`
@@ -36,14 +36,14 @@ const modalStyle = {
   p: 4
 }
 
-interface PendingUserCardReviewProps {
+interface UserCardReviewProps {
   pendingUser: PendingUser
   removeUserFromPendingUsers: (publicKey: PendingUser['public_key']) => void
 }
 
 const initialConfirmationModal = { show: false, title: '', description: '', action: () => {} }
 
-function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: PendingUserCardReviewProps) {
+function UserCardReview({ pendingUser, removeUserFromPendingUsers }: UserCardReviewProps) {
   const [userImage, setUserImage] = useState('')
   const [mintIsLoading, setMintIsLoading] = useState(false)
   const [userImageBlob, setUserImageBlob] = useState<Blob | null>(null)
@@ -117,15 +117,18 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
 
   return (
     <>
-      <StyledUserCardContainer className='flex flex-col p-2 sm:px-4 sm:py-6 shadow-md hover:shadow-lg hover:shadow-white shadow-white '>
-        <div className='flex items-center gap-2'>
+      <StyledUserCardContainer className='flex flex-col shadow-md hover:shadow-lg hover:shadow-white shadow-white'>
+        <div className=''>
+          <Image className='w-full' src='/svg/user-card-header.svg' width={670} height={140} alt='viem logo' />
+        </div>
+        <div className='flex items-center gap-10 px-10'>
           {userImage && (
             <Image
               src={userImage}
               width={200}
               height={200}
               alt='user picture'
-              className='h-[100px] w-[100px] sm:h-[200px] sm:w-[200px]'
+              className='h-[100px] w-[100px] sm:h-[200px] sm:w-[200px] rounded-full p-1 border-8	border-[#9EC6A2]'
             />
           )}
           <div className='flex flex-col gap-2 text-sm'>
@@ -197,4 +200,4 @@ function PendingUserCardReview({ pendingUser, removeUserFromPendingUsers }: Pend
   )
 }
 
-export default PendingUserCardReview
+export default UserCardReview

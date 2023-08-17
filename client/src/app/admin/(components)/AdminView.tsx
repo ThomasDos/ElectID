@@ -31,7 +31,7 @@ function AdminView() {
   }, [])
 
   return (
-    <main className='flex flex-col items-center px-40'>
+    <main className='flex flex-col items-center px-10 sm:px-20 md:px-40'>
       <div className='flex justify-center py-8'>
         <div className='flex flex-col justify-center w-3/5 pr-4'>
           <H1Custom className='mb-10'>Admin Dashboard</H1Custom>
@@ -50,7 +50,7 @@ function AdminView() {
 
       <div className='my-40 w-full' id='pending-users'>
         <H2Custom className='mb-10'>Pending users</H2Custom>
-        <div className='grid grid-cols-2 gap-2'>
+        <div className='grid xl:grid-cols-2 gap-8'>
           {pendingUsers.map((pendingUser) => (
             <UserCardReview
               key={pendingUser.public_key}
